@@ -5,4 +5,4 @@ There is also a web UI that connects to you MetaMask.
 
 - compile contracts: `npx hardhat compile`
 - test contracts: `npx hardhat test`
-- deploy contracts: `hardhat run scripts/deploy.ts`
+- deploy contracts: `yarn deploy:scrollAlpha`

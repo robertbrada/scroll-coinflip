@@ -1,22 +1,19 @@
 import { ethers } from "hardhat";
 
+console.log("process.env.PRIVATE_KEY", process.env.PRIVATE_KEY);
+
+
 async function main() {
   const currentTimestampInSeconds = Math.round(Date.now() / 1000);
   const unlockTime = currentTimestampInSeconds + 60;
 
   const lockedAmount = ethers.parseEther("0.001");
 
-  const lock = await ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  // deploy coinFLip contract
+  const coinFlip = await ethers.deployContract("CoinFlip", []);
+  await coinFlip.waitForDeployment();
 
-  await lock.waitForDeployment();
-
-  console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
-  );
+  console.log(`Coin Flip with deployed to ${coinFlip.target}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

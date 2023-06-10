@@ -5,7 +5,6 @@ contract CoinFlip {
     enum Side {Heads, Tails}
 
     address public owner;
-    uint public betAmount;
     uint public balance;
     uint private constant MAX_BET = 1 ether;
 
@@ -34,12 +33,10 @@ contract CoinFlip {
         
         if (win) {
             if (balance >= amount) {
-                // msg.sender.transfer(amount);
                 payable(msg.sender).transfer(amount);
                 balance -= amount;
             } else {
                 amount = balance;
-                // msg.sender.transfer(balance);
                 payable(msg.sender).transfer(balance);
                 balance = 0;
             }
