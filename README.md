@@ -1,16 +1,8 @@
-# Sample Hardhat Project
+# Scroll Coin Flip
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+This project deploys famous Coin Flip game using [Scroll zkEVM ](https://scroll.io/).
+There is also a web UI that connects to you MetaMask.
 
 - compile contracts: `npx hardhat compile`
 - test contracts: `npx hardhat test`
+- deploy contracts: `hardhat run scripts/deploy.ts`
