@@ -4,7 +4,16 @@ import "./App.css";
 import type { BrowserProvider, JsonRpcSigner } from "ethers/providers";
 import { contractAddress, contractABI } from "../constants";
 import type { CoinFlip } from "../../typechain";
-import { Anchor, Button, Group, Radio, Stack, Text } from "@mantine/core";
+import {
+  Anchor,
+  Button,
+  Group,
+  Radio,
+  Stack,
+  Text,
+  Image,
+} from "@mantine/core";
+import logo from "./assets/scroll-logo.png";
 
 const guessToInt: Record<string, number> = {
   head: 0,
@@ -81,6 +90,7 @@ function App() {
 
   return (
     <Stack align="center" spacing="sm">
+      <Image src={logo} alt="Logo" style={{ width: 200 }} />
       <h1>Scroll Coin Flip</h1>
       {!provider || !accountAddress ? (
         <div>Wallet not connected</div>
