@@ -93,18 +93,23 @@ function App() {
 
   return (
     <Stack align="center">
-      <Image src={logo} alt="Logo" style={{ width: 200 }} />
-      <h1>Scroll Coin Flip</h1>
+      <Image
+        src={logo}
+        alt="Logo"
+        style={{ width: 480, marginBottom: "2rem" }}
+      />
       <Text weight={500}>You guess:</Text>
-      <Radio.Group value={guess} onChange={setGuess} name="favoriteFramework">
+      <Radio.Group value={guess} onChange={setGuess} name="guessChoice">
         <Group mt="xs">
-          <Radio value="head" label="Head" />
-          <Radio value="tail" label="Tail" />
+          <Radio value="head" label="Head" color="yellow" />
+          <Radio value="tail" label="Tail" color="yellow" />
         </Group>
       </Radio.Group>
       <Text mt="md">Bet amount is {BET_AMOUNT_ETH} ETH</Text>
       <br />
-      <Button onClick={handleFlip}>Flip the coin!</Button>
+      <Button onClick={handleFlip} color="yellow">
+        Flip the coin!
+      </Button>
       {transactionHash && (
         <Text span>
           Transaction hash:{" "}
@@ -116,7 +121,7 @@ function App() {
           </Anchor>
         </Text>
       )}
-      <Text mt="md" weight="500" color={walletConnected ? "green" : "red"}>
+      <Text mt="md" weight="500" color={walletConnected ? "gray" : "red"}>
         {walletConnected ? "Wallet connected" : "Wallet not connected"}
       </Text>
     </Stack>
