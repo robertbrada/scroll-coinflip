@@ -9,6 +9,8 @@ Unfortunately, I didn't find a secure way how to generate randomness because PRE
 in Scroll zkEVM and the oracle solutions were not working either for me (but that was most likely not related to Scroll).
 The contract trying to use RedStone randomness oracle is in `contracts/CoinFlipRedStone.sol`.
 
+THe contract is deployed to `0x987CB93496fD78558664212661F11f902670F34e`.
+
 ## Game
 In the web ui you the players chooses if thinks Head or Tail will be chosen by the smart contract.
 Then the player initialized a transaction ("flips the coin in smart contract").
