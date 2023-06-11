@@ -1,21 +1,26 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.18;
 
-contract CoinFlip {
+import "redstone-evm-connector/lib/contracts/message-based/PriceAwareOwnable.sol";
+
+// contract CoinFlipRandom {
+contract CoinFlipRedStone is PriceAwareOwnable {
+
     enum Side {Heads, Tails}
 
-    address public owner;
+    address public ownerFlip;
+    uint public betAmount;
     uint public balance;
     uint private constant MAX_BET = 1 ether;
 
     event FlipResult(address indexed player, Side side, bool win, uint amount);
 
     constructor() {
-        owner = msg.sender;
+         ownerFlip = msg.sender;
     }
 
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Only contract owner can call this function");
+    modifier onlyOwnerFlip() {
+        require(msg.sender == ownerFlip, "Only contract owner can call this function");
         _;
     }
 
@@ -33,10 +38,12 @@ contract CoinFlip {
         
         if (win) {
             if (balance >= amount) {
+                // msg.sender.transfer(amount);
                 payable(msg.sender).transfer(amount);
                 balance -= amount;
             } else {
                 amount = balance;
+                // msg.sender.transfer(balance);
                 payable(msg.sender).transfer(balance);
                 balance = 0;
             }
@@ -46,13 +53,11 @@ contract CoinFlip {
     }
 
     function randomizeSide() private view returns (Side) {
-        // block.prevrandao returns always 0 in Scroll, so don't use it
+        // block.prevrandao returns always 0 in RiscZero
         // uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.timestamp, block.prevrandao))) % 2;
-
-        // This is not save way how to generate rundom number becuase the validators know block.timestamp and block.number
-        // thius know what the random number will be and can cheat.
-        uint256 randomNumber = uint256(keccak256(abi.encodePacked(block.timestamp))) % 2;
+        uint256 randomNumber = generateRandomNumber(1);
         return Side(randomNumber);
+        
     }
 
     function withdrawFunds() external onlyOwner {
@@ -62,13 +67,24 @@ contract CoinFlip {
         payable(msg.sender).transfer(amount);
     }
 
-    function getContractBalance() public view returns (uint256) {
-        return address(this).balance;
+    function getPseudoRandomness() private view returns(uint256) {
+        uint256 randomValue = getPriceFromMsg(bytes32("ENTROPY"));
+
+        return uint256(
+        keccak256(
+            abi.encodePacked(
+            randomValue,
+            block.timestamp,
+            blockhash(block.number - 1),
+            blockhash(block.number)
+            )
+        )
+        );
     }
 
-    receive() external payable {
-    // Allow contract to receive ETH
-    // Executed when callend function that doesn't exist inside the contract and msg.data is empty.
-    //   emit Log("receive", gasleft());
+    // Generates a random number from 1 to maxValue
+    function generateRandomNumber(uint256 maxValue) public view returns(uint256) {
+        uint256 randomness = getPseudoRandomness();
+        return (randomness % maxValue) + 1;
     }
 }

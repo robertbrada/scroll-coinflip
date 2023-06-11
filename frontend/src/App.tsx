@@ -15,6 +15,7 @@ import {
 } from "@mantine/core";
 import logo from "./assets/scroll-logo.png";
 
+const BET_AMOUNT_ETH = "0.001";
 const guessToInt: Record<string, number> = {
   head: 0,
   tail: 1,
@@ -72,7 +73,7 @@ function App() {
     // Execute a contract function
     // const transaction = await contract.yourContractFunction();
     const transactionResp = await contract.flipCoin(guessToInt[guess], {
-      value: ethers.parseEther("0.000001"),
+      value: ethers.parseEther(BET_AMOUNT_ETH),
     });
 
     console.log("transactionResp", transactionResp);
@@ -88,23 +89,20 @@ function App() {
     updateEvents();
   }, [transactionHash]);
 
+  const walletConnected = provider && accountAddress;
+
   return (
-    <Stack align="center" spacing="sm">
+    <Stack align="center">
       <Image src={logo} alt="Logo" style={{ width: 200 }} />
       <h1>Scroll Coin Flip</h1>
-      {!provider || !accountAddress ? (
-        <div>Wallet not connected</div>
-      ) : (
-        <div>Wallet connected</div>
-      )}
-      <hr />
-      <Text>You guess:</Text>
+      <Text weight={500}>You guess:</Text>
       <Radio.Group value={guess} onChange={setGuess} name="favoriteFramework">
         <Group mt="xs">
           <Radio value="head" label="Head" />
           <Radio value="tail" label="Tail" />
         </Group>
       </Radio.Group>
+      <Text mt="md">Bet amount is {BET_AMOUNT_ETH} ETH</Text>
       <br />
       <Button onClick={handleFlip}>Flip the coin!</Button>
       {transactionHash && (
@@ -118,6 +116,9 @@ function App() {
           </Anchor>
         </Text>
       )}
+      <Text mt="md" weight="500" color={walletConnected ? "green" : "red"}>
+        {walletConnected ? "Wallet connected" : "Wallet not connected"}
+      </Text>
     </Stack>
   );
 }

@@ -1,6 +1,6 @@
 import type { InterfaceAbi } from "ethers";
 
-export const contractAddress = "0xbfeC2320Bf24A289d393932fB30998Ed5fa84C46";
+export const contractAddress = "0x987CB93496fD78558664212661F11f902670F34e";
 export const contractABI: InterfaceAbi = [
   {
     inputs: [],
@@ -52,19 +52,6 @@ export const contractABI: InterfaceAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "betAmount",
-    outputs: [
-      {
-        internalType: "uint256",
-        name: "",
-        type: "uint256",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "enum CoinFlip.Side",
@@ -75,6 +62,19 @@ export const contractABI: InterfaceAbi = [
     name: "flipCoin",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getContractBalance",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -96,5 +96,9 @@ export const contractABI: InterfaceAbi = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];

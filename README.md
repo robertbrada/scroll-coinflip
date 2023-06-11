@@ -6,7 +6,8 @@ There is also a web UI that connects to you MetaMask.
 
 The goal os to deploy fully usable app to Scroll zkEVM and test how it works with randomness. 
 Unfortunately, I didn't find a secure way how to generate randomness because PREVRANDAO is not working
-in Scroll zkEVM and the oracle solutions were not working either for me (but that was most likely not related to Scroll)
+in Scroll zkEVM and the oracle solutions were not working either for me (but that was most likely not related to Scroll).
+The contract trying to use RedStone randomness oracle is in `contracts/CoinFlipRedStone.sol`.
 
 ## Game
 In the web ui you the players chooses if thinks Head or Tail will be chosen by the smart contract.
